@@ -1,0 +1,24 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    position: static;
+    min-height: 20%;
+    width: 100%; /* #trocar para % */
+    background-color: aqua;
+}
+
+.header ul{
+    display: flex;
+    column-gap: 30px;
+}
+
+.logo{
+    justify-items: center;
+    height: 100%;
+    width: 40%;
+}
+
+.logo img{
+    padding: 20px;
+}
