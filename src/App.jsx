@@ -1,14 +1,14 @@
 
-import Header from './components/Header'
 import Dashboard from './pages/dashboard/Dashboard';
 import Home from './pages/home/Home';
+import Layout from './components/Layout/Layout';
 import {createBrowserRouter,RouterProvider, createRoutesFromElements, Route} from "react-router-dom";
 
 // instancionamento das rotas para navegação entre páginas
 const browserRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/">
-      <Route index element={<Header busca={true} />} />
+    <Route path="/" element={<Layout />}>
+      <Route index element={<Home />} />
       <Route path="dashboard" element={<Dashboard />} />
     </Route>
 
