@@ -1,6 +1,6 @@
 import '../styles/Header.css';
 import logoIcon from "../assets/logo.png";
-import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom'
 
 function Header() {// desativas o erro do missing validation depois nos pacots
     return (
@@ -8,7 +8,8 @@ function Header() {// desativas o erro do missing validation depois nos pacots
             <header className="header">
             <div>
                 <ul>
-                    <li><a href="/">Home</a></li> {/*Mudar para Icone */}
+                    <li><Link to="/">Home</Link></li> {/*Mudar para Icone */}
+                    <li><Link to="/dashboard">Dashboard</Link></li>
                 </ul>
             </div>
             <div className="logo">
@@ -21,10 +22,6 @@ function Header() {// desativas o erro do missing validation depois nos pacots
         </div>
         
     )
-}
-
-Header.PropTypes = {
-    busca: PropTypes.bool.isRequired
 }
 
 export default Header

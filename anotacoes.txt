@@ -20,3 +20,7 @@ function validarInfo(email, senha) { // fazer diferentes para e-mail e senha, a 
 }
 
 Biblioteca React Router para rotas entre páginas
+
+
+-- Vamos ter uma página UP para informações mais detalhadas do livro em específico. O background fica transparente
+-- vamos ter uma pagina mais geral

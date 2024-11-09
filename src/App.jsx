@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
 import Home from './pages/Home';
 import Layout from './components/Layout/Layout';
+import './styles/App.css'
 import {createBrowserRouter,RouterProvider, createRoutesFromElements, Route} from "react-router-dom";
 
 // instancionamento das rotas para navegação entre páginas
