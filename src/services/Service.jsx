@@ -6,7 +6,7 @@ import httpClient from './baseAxio';
 function Service() {
     // melhorar de modo que analisamos as regras particulares para cada consulta
     const [dado, setDado] = useState([]);
-    const key = '&key=' + 'AIzaSyBNwlroRnleqw6yHdzzXe7GjIiIRu23djY';
+    const key = '&key=' + import.meta.env.VITE_API_KEY;
 
  
     const getGeneral = async (val) => {
