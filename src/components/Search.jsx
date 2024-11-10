@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "../styles/Search.css";
 import PropTypes from 'prop-types';
-
+import { Button, Stack, IconButton, TextField} from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
 function Search(props) {
     const [inputValue, search] = useState('');
    
@@ -17,16 +18,24 @@ function Search(props) {
     }
 
     return (
-        <div className="content-search">
-            <input 
-                type="text" 
-                placeholder="Busque por gênero, título, ISBN.." 
-                className="search" 
-                value={inputValue} // Associar o estado com o valor do input
-                onChange={handleInput} // Chama a função de mudança no valor
-            />
-            {/**Atualizar para icone de bsuca */}
-            <button onClick={handleClick}>Buscar</button>
+        <div className="content-stack">
+            <div className="content-search">
+                <TextField
+                    size="small"
+                    color='primary'
+                    variant='standard'
+                    type="text" 
+                    placeholder="Busque por gênero, título, ISBN.." 
+                    className="search" 
+                    value={inputValue} // Associar o estado com o valor do input
+                    onChange={handleInput} // Chama a função de mudança no valor
+                />
+            </div>
+            <div className="busca">
+                <IconButton onClick={handleClick} aria-label='send' size='small' color='secundary'>
+                    <SearchIcon/>
+                </IconButton>
+            </div>
         </div>
     );
 }
