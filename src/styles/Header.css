@@ -7,21 +7,38 @@
     width: 100%; /* #trocar para % */
     background-color:rgb(210,227,252);
     z-index: 1;
+    justify-content: space-around;
+
 }
 
 .header ul{
     display: flex;
     column-gap: 30px;
+    list-style: none;
+    text-decoration: none;
+    
+}
+
+Link{
+    text-decoration: none;
+}
+
+.mensage{
+    display: inline-flex;
+    justify-content:flex-end;
+    align-items: center;
+    height: 100%;
+    width: 60%;
+
 }
 
 .logo{
-    justify-items: center;
-    height: 30%;
-    width: 40%;
+    display: flex;
+    justify-content: center;
+    width: 30%;
 }
 
 .logo img{
-    padding: 20px;
-    width: 15%;
-    height: 25%;
+    width: 40%;
+    height: 50%;
 }

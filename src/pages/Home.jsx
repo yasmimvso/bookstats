@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import Search from '../components/Search';
 import Service from '../services/Service';
+import { Typography, Stack} from '@mui/material';
 
 function Home() {
     const { dado, getGeneral } = Service();
@@ -29,10 +30,9 @@ function Home() {
         <div>
             <Search onSearch={handleSearch} />
             <div>
-                <h1 className={styles.h1}>Teste de Home</h1>
+                <Typography className={styles.h1} varient='h4'>Teste de Home</Typography>
                 <div>
-                    <h2>Testes</h2>
-                    <ul>
+                    <Stack direction="row" spacing={2}>
                         {dado.length > 0 ? (
                             dado.map((item, index) => (
                                 <li key={index}>{item.volumeInfo.title}</li>
@@ -40,7 +40,7 @@ function Home() {
                         ) : (
                            <p>chamar uma pagina em especifica</p>
                         )}
-                    </ul>
+                    </Stack>
                 </div>
             </div>
         </div>

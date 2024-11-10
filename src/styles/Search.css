@@ -1,7 +1,16 @@
+.content-stack{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    row-gap: 10%;
+    /* background-color: blueviolet; */
+}
+
 .content-search{
     padding: 0.5%;
-    width: 20%;
-    border-bottom: 3px solid rgb(65, 65, 128);
+    width: 25%;
+    /* border-bottom: 3px solid rgb(65, 65, 128); */
 }
 
 .search{
