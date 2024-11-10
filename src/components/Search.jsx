@@ -58,8 +58,8 @@ function Search(props) {
                         <ListItemButton sx={{ pl: 4 }} onClick={() => handleOptionClick(3, "Editora")}>
                             <ListItemText primary="Editora" />
                         </ListItemButton>
-                        <ListItemButton sx={{ pl: 4 }} onClick={() => handleOptionClick(4, "ISBN" )}>
-                            <ListItemText primary="ISBN" />
+                        <ListItemButton sx={{ pl: 4 }} onClick={() => handleOptionClick(4, "Gênero" )}>
+                            <ListItemText primary="Gênero" />
                         </ListItemButton>
                     </List>
                 )}
