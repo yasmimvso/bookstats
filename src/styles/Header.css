@@ -1,44 +1,19 @@
+.header {
+    background-color: rgb(210, 227, 252);
+    color: #333; 
+}
+
+.logo {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+}
+
 .header{
-    display: flex;
-    flex-direction: row;
-    align-items: center; 
-    position: static;
-    min-height: 20%;
-    width: 100%; /* #trocar para % */
-    background-color:rgb(210,227,252);
-    z-index: 1;
-    justify-content: space-around;
-
+    color: #333; 
 }
 
-.header ul{
-    display: flex;
-    column-gap: 30px;
-    list-style: none;
+.header a {
     text-decoration: none;
-    
-}
-
-Link{
-    text-decoration: none;
-}
-
-.mensage{
-    display: inline-flex;
-    justify-content:flex-end;
-    align-items: center;
-    height: 100%;
-    width: 60%;
-
-}
-
-.logo{
-    display: flex;
-    justify-content: center;
-    width: 30%;
-}
-
-.logo img{
-    width: 40%;
-    height: 50%;
+    color: inherit;
 }
