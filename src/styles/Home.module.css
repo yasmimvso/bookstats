@@ -4,3 +4,13 @@
   line-height: 1.1;
   color: blue
 }
+
+.content{
+  background-color: aqua;
+}
+
+.imgBooks{
+  width: 210;
+  height: 260;
+  cursor: pointer;
+}

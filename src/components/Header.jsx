@@ -2,7 +2,7 @@ import '../styles/Header.css';
 import logoIcon from "../assets/logo.png";
 import {Link} from 'react-router-dom'
 import { useState } from 'react';
-import { Typography,ToggleButton, fabClasses} from '@mui/material';
+import { Typography,ToggleButton} from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 function Header() {// desativas o erro do missing validation depois nos pacots
@@ -12,8 +12,8 @@ function Header() {// desativas o erro do missing validation depois nos pacots
             <header className="header">
                 <Typography variant='body1'>
                     <ul>
-                        <li><Link to="/">Inicio</Link></li> {/*Mudar para Icone */}
-                        <li><Link to="/dashboard">Dashboard</Link></li>
+                        <li><Link to="/" >Inicio</Link></li> 
+                        <li><Link to="/dashboard" >Dashboard</Link></li>
                     </ul>
                 </Typography>
                 <div className="mensage">
