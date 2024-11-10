@@ -12,10 +12,13 @@ function Service() {
     const key = '&key=' + import.meta.env.VITE_API_KEY;
 
  
-    const getGeneral = async (val) => {
-        console.log('?q='+ val + key)
+    const getGeneral = async (string, val) => {
+        console.log("Valor selecionado", val);
+        console.log('?q='+ string + key)
+
+        // mudar consulta conforme val selecionado
         try {
-            const response = await httpClient.get('?q='+ val + key);
+            const response = await httpClient.get('?q='+ string + key);
             setDado(response.data.items); 
             console.log("RESPONSE STATUS", response.status );
             console.log("DADO DE RETORNO: ", response.data.items);
