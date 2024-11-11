@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Search from '../components/Search';
 import Service from '../services/Service';
 import Slides from '../components/Slides/Slides';
+import  InterativeTimeRating from '../components/Graficos/InterativeTimeRating';
 
 import { Typography, Container} from '@mui/material';
 import Divider from '@mui/material/Divider';
@@ -15,7 +16,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
 
-    const { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome } = Service();
+    const { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome} = Service();
 
     const [query, setQuery] = useState('');
     const [homeLoad, setLoadHome] = useState(false);
@@ -94,6 +95,7 @@ function Home() {
             <Typography variant="h5" mt={4}>Visualização Interativa de dados</Typography>
             <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 {/** Fazer as análises gráficas */}
+                <InterativeTimeRating/>
             </Container>
         </Container>
     );

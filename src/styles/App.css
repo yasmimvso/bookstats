@@ -4,6 +4,8 @@
 *{
   margin: 0;
   padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
 }
 
 a {

@@ -12,14 +12,11 @@ function Service() {
 
     const dataMostViewed = (dado) => {
 
-        // "averageRating": 5,
-        // "ratingsCount": 1,
-
         const result = dado
             .filter(item => item.volumeInfo && item.volumeInfo.ratingsCount > 50)
             .sort((a, b) => parseInt(b.volumeInfo.ratingsCount) - parseInt(a.volumeInfo.ratingsCount))
             .slice(0, 10);
-        
+
         console.log("DADOS MOST VIEWD", result);
         setDadoView(result);
     };
@@ -29,7 +26,7 @@ function Service() {
             .filter(item => item.volumeInfo && item.volumeInfo.averageRating > 4.3)
             .sort((a, b) => parseInt(b.volumeInfo.averageRating) - parseInt(a.volumeInfo.averageRating))
             .slice(0, 10);
-        
+
         console.log("DADOS MOST AVALIABLE", result);
         setDadoValiable(result);
     };
@@ -92,7 +89,7 @@ function Service() {
     const getHome = async () => {
         try {
             const response = await httpClient.get(`?q=all${key}`);
-            
+
             dataMostViewed(response.data.items);
             dataSubject(response.data.items);
             dataMostAvaliable(response.data.items);
@@ -101,7 +98,19 @@ function Service() {
         }
     };
 
-    return { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome };
+    const getInterativeTime = async () => {
+        try {
+            const response = await httpClient.get(`?q=romance${key}`);
+
+            setDado(response.data.items)
+
+            console.log("DATA", response.data.items);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    return { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome, getInterativeTime};
 }
 
 export default Service;
