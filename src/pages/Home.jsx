@@ -93,8 +93,9 @@ function Home() {
             </Container>
             <Divider sx={{ mt: 4 }} />
             <Typography variant="h5" mt={4}>Visualização Interativa de dados</Typography>
-            <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 {/** Fazer as análises gráficas */}
+                <InterativeTimeRating/>
                 <InterativeTimeRating/>
             </Container>
         </Container>

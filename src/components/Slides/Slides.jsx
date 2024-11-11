@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 function Slides({ dado, isFetching }) {
     const [open, setOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null); // Armazena o item selecionado
+    const [selectedItem, setSelectedItem] = useState(null); 
     const { settings } = Setting();
 
     const handleOpen = (item) => {
@@ -45,7 +45,7 @@ function Slides({ dado, isFetching }) {
                                 className={styles.imgBooks}
                                 alt={item.volumeInfo.title}
                                 src={item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : LogoBook}
-                                onClick={() => handleOpen(item.volumeInfo)} // Passa o item para o modal
+                                onClick={() => handleOpen(item)} 
                             />
                         )}
                         <Box sx={{ pr: 2, mt: 1 }}>

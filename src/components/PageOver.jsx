@@ -11,6 +11,10 @@ import StarIcon from '@mui/icons-material/Star';
 import Box from '@mui/material/Box';
 
 import PropTypes from 'prop-types';
+import { Divider } from '@mui/material';
+
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -29,7 +33,7 @@ function PageOver({ open, onClose, item }) {
       open={open}
     >
       <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-        {item?.volumeInfo?.title || 'Detalhes do Livro'}
+        {'Detalhes do Livro'}
       </DialogTitle>
       <IconButton
         aria-label="close"
@@ -45,21 +49,28 @@ function PageOver({ open, onClose, item }) {
       </IconButton>
       <DialogContent dividers>
         <Typography gutterBottom variant="h6">
-          Detalhes do Livro
+          Título: {item?.volumeInfo?.title || 'Título desconhecido'}
         </Typography>
         <Box>
           <Typography gutterBottom variant="body2">
-            Título: {item?.volumeInfo?.title || 'Título desconhecido'}
+            Autor:  {Array.isArray(item?.authors)
+              ? item?.volumeInfo?.authors.join(', ')
+              : item?.volumeInfo?.authors || 'Autor desconhecido'}
           </Typography>
-          {item?.volumeInfo?.imageLinks?.thumbnail && (
-            <img
-              alt="Capa do livro"
-              src={item.volumeInfo.imageLinks.thumbnail}
-              width="150"
-              style={{ marginBottom: '10px' }}
-            />
-          )}
-          <Typography>
+          <Typography gutterBottom variant="body2">
+            Editora:  {item?.volumeInfo?.publisher}
+          </Typography>
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            {item?.volumeInfo?.imageLinks?.thumbnail && (
+              <img
+                alt="Capa do livro"
+                src={item.volumeInfo.imageLinks.thumbnail}
+                width="150"
+                style={{ marginBottom: '10px' }}
+              />
+            )}
+          </Box>
+          <Typography sx={{ display: 'flex', textAlign: 'center', justifyContent: 'center' }}>
             Avaliação: {item?.volumeInfo?.averageRating || 'Sem avaliações'}
             <StarIcon />
           </Typography>
@@ -71,6 +82,35 @@ function PageOver({ open, onClose, item }) {
           {item?.volumeInfo?.description || 'Descrição não disponível.'}
         </Typography>
       </DialogContent>
+      <Divider />
+      <DialogContent dividers>
+        <Box>
+          {item?.saleInfo?.buyLink ? (
+            <a href={item.saleInfo.buyLink} target="_blank" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <ShoppingCartIcon style={{ marginRight: 5 }} />
+              Comprar no Google Books
+            </a>
+          ) : (
+            <a href={item.saleInfo.buyLink} target="_blank" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <ShoppingCartIcon style={{ marginRight: 5 }} />
+              Indisponível
+            </a>
+          )}
+
+          {item?.volumeInfo?.previewLink ? (
+            <a href={item?.volumeInfo?.previewLink} target="_blank" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <LocalLibraryIcon style={{ marginRight: 5 }} />
+              Visualizar Preview
+            </a>
+          ) : (
+            <a href={item?.volumeInfo?.previewLink} target="_blank" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+              <LocalLibraryIcon style={{ marginRight: 5 }} />
+              Indisponível
+            </a>
+          )}
+        </Box>
+      </DialogContent>
+
       <DialogActions>
         <Button autoFocus onClick={onClose}>
           Fechar
@@ -83,7 +123,7 @@ function PageOver({ open, onClose, item }) {
 PageOver.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  item: PropTypes.object.isRequired, 
+  item: PropTypes.object.isRequired,
 }
 
 export default PageOver;
