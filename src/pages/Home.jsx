@@ -8,6 +8,8 @@ import { Typography, Container, Button } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Slider from "react-slick";
 
+import PageOver from '../components/PageOver'
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -21,6 +23,17 @@ function Home() {
     const [opSelectedTemp, setOptionTemp] = useState(0);
     const [queryTemp, setQueryTemp] = useState('');
     const [isFetching, setIsFetching] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    // Função para abrir o modal
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    // Função para fechar o modal
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     // Efeito para carregar os dados iniciais quando a página é montada e `query` está vazio
     useEffect(() => {
@@ -51,13 +64,13 @@ function Home() {
     }
 
     return (
-        <Container maxWidth="false" sx={{ display: 'flex', flexDirection: 'column'}}>
-            <Search onSearch={handleSearch} sx={{ alignItems: 'center', justifyContent: 'center'}}/>
+        <Container maxWidth="false" sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Search onSearch={handleSearch} sx={{ alignItems: 'center', justifyContent: 'center' }} />
             <Divider />
             <Typography variant="h5" mt={4}>Categorias pensadas para você!</Typography>
             <Container maxWidth="xl" className="content" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {homeLoad ?
-                    <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column'}}>
+                    <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="h6" mt={4}>Achados Mais Vistos</Typography>
                         <Slides dado={dadoView} isFetching={isFetching} />
                         <Typography variant="h6" mt={4}>Editoras de Sucesso</Typography>
@@ -66,9 +79,12 @@ function Home() {
                         <Slides dado={dadoValiable} isFetching={isFetching} />
                     </Container>
                     :
-                    <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column'}}>
+                    <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="h6" mt={4}>Os melhores livros de {query}</Typography>
-                        <Button onClick={()=>console.log("ola")}> Click aqui</Button>
+                        <Button onClick={handleOpen}>Click aqui</Button>
+
+                        {/* Exibe o PageOver (ou outro componente) quando o estado 'open' for verdadeiro */}
+                        {open && <PageOver onClose={handleClose} />}
                         <Slides dado={dado} isFetching={isFetching} />
                     </Container>
                 }
