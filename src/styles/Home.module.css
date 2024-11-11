@@ -9,8 +9,13 @@
   background-color: aqua;
 }
 
-.imgBooks{
-  width: 210;
-  height: 260;
+.imgBooks {
+  width: 70%;
+  height: 80%;
   cursor: pointer;
+  transition: transform 0.3s ease; 
+}
+
+.imgBooks:hover {
+  transform: scale(1.1);
 }

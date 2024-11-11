@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -8,9 +7,11 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import StarIcon from '@mui/icons-material/Star';
+import Box from '@mui/material/Box';
 
-// Estilizando o Dialog com MUI
+import PropTypes from 'prop-types';
+
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -20,64 +21,69 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-function PageOver() {
-  const [open, setOpen] = useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+function PageOver({ open, onClose, item }) {
   return (
-    <>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
+    <BootstrapDialog
+      onClose={onClose}
+      aria-labelledby="customized-dialog-title"
+      open={open}
+    >
+      <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+        {item?.volumeInfo?.title || 'Detalhes do Livro'}
+      </DialogTitle>
+      <IconButton
+        aria-label="close"
+        onClick={onClose}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: (theme) => theme.palette.grey[500],
+        }}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal Title
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
+        <CloseIcon />
+      </IconButton>
+      <DialogContent dividers>
+        <Typography gutterBottom variant="h6">
+          Detalhes do Livro
+        </Typography>
+        <Box>
+          <Typography gutterBottom variant="body2">
+            Título: {item?.volumeInfo?.title || 'Título desconhecido'}
+          </Typography>
+          {item?.volumeInfo?.imageLinks?.thumbnail && (
+            <img
+              alt="Capa do livro"
+              src={item.volumeInfo.imageLinks.thumbnail}
+              width="150"
+              style={{ marginBottom: '10px' }}
+            />
+          )}
+          <Typography>
+            Avaliação: {item?.volumeInfo?.averageRating || 'Sem avaliações'}
+            <StarIcon />
+          </Typography>
+        </Box>
+        <Typography
+          variant="body2"
+          sx={{ display: 'block', color: 'textPrimary', marginTop: '10px' }}
         >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam.
-          </Typography>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam.
-          </Typography>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam.
-          </Typography>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
-      </BootstrapDialog>
-    </>
+          {item?.volumeInfo?.description || 'Descrição não disponível.'}
+        </Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button autoFocus onClick={onClose}>
+          Fechar
+        </Button>
+      </DialogActions>
+    </BootstrapDialog>
   );
+}
+
+PageOver.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  item: PropTypes.object.isRequired, 
 }
 
 export default PageOver;

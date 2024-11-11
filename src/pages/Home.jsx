@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import styles from '../styles/Home.module.css';
+
 import Search from '../components/Search';
 import Service from '../services/Service';
 import Slides from '../components/Slides/Slides';
 
-import { Typography, Container, Button } from '@mui/material';
+import { Typography, Container} from '@mui/material';
 import Divider from '@mui/material/Divider';
-import Slider from "react-slick";
 
-import PageOver from '../components/PageOver'
+
+// import PageOver from '../components/PageOver'
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -23,38 +23,41 @@ function Home() {
     const [opSelectedTemp, setOptionTemp] = useState(0);
     const [queryTemp, setQueryTemp] = useState('');
     const [isFetching, setIsFetching] = useState(false);
-    const [open, setOpen] = useState(false);
+    // const [open, setOpen] = useState(false);
 
-    // Função para abrir o modal
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    // // // Função para abrir o modal
+    // const handleOpen = () => {
+    //     console.log("aqui aqui")
+    //     setOpen(true);
+    //     console.log(open);
+    // };
 
-    // Função para fechar o modal
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // // Função para fechar o modal
+    // const handleClose = () => {
+    //     console.log("algum problemas")
+    //     setOpen(false);
+    // };
 
     // Efeito para carregar os dados iniciais quando a página é montada e `query` está vazio
-    useEffect(() => {
-        if (!homeLoad) {
-            setIsFetching(true);
-            // getHome().then(() => {
-            //     setIsFetching(false);
-            //     setLoadHome(true);
-            // });
-        }
-    }, [query, getHome, isFetching, setLoadHome]);
+    // useEffect(() => {
+    //     if (!homeLoad) {
+    //         setIsFetching(true);
+    //         // getHome().then(() => {
+    //         //     setIsFetching(false);
+    //         //     setLoadHome(true);
+    //         // });
+    //     }
+    // }, [query, getHome, isFetching, setLoadHome]);
 
     // Efeito para realizar busca quando `query` muda ou uma nova opção é selecionada
     useEffect(() => {
         if (query && (query !== queryTemp || opSelected !== opSelectedTemp) && !isFetching) {
             setIsFetching(true);
-            // getGeneral(query, opSelected).then(() => {
-            //     setIsFetching(false);
-            //     setQueryTemp(query);
-            //     setOptionTemp(opSelected);
-            // });
+            getGeneral(query, opSelected).then(() => {
+                setIsFetching(false);
+                setQueryTemp(query);
+                setOptionTemp(opSelected);
+            });
         }
     }, [query, opSelected, queryTemp, opSelectedTemp, getGeneral, isFetching]);
 
@@ -81,10 +84,8 @@ function Home() {
                     :
                     <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="h6" mt={4}>Os melhores livros de {query}</Typography>
-                        <Button onClick={handleOpen}>Click aqui</Button>
-
-                        {/* Exibe o PageOver (ou outro componente) quando o estado 'open' for verdadeiro */}
-                        {open && <PageOver onClose={handleClose} />}
+                        {/* <Button onClick={handleOpen} key={index} item={item.volumeInfo}>Clique aqui</Button>
+                        <PageOver open={open} onClose={handleClose} /> */}
                         <Slides dado={dado} isFetching={isFetching} />
                     </Container>
                 }
