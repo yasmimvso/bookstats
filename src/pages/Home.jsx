@@ -4,10 +4,9 @@ import Search from '../components/Search';
 import Service from '../services/Service';
 import Slides from '../components/Slides/Slides';
 import  InterativeTimeRating from '../components/Graficos/InterativeTimeRating';
-
+// import InterativeSubject from '../components/Graficos/interativeSubject';
 import { Typography, Container} from '@mui/material';
 import Divider from '@mui/material/Divider';
-
 
 // import PageOver from '../components/PageOver'
 
@@ -16,39 +15,24 @@ import "slick-carousel/slick/slick-theme.css";
 
 function Home() {
 
-    const { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome} = Service();
+    const { dado,  getGeneral, getHome} = Service();
 
     const [query, setQuery] = useState('');
-    const [homeLoad, setLoadHome] = useState(false);
+    const [homeLoad, setLoadHome] = useState(true);
     const [opSelected, setOption] = useState(0);
     const [opSelectedTemp, setOptionTemp] = useState(0);
     const [queryTemp, setQueryTemp] = useState('');
     const [isFetching, setIsFetching] = useState(false);
-    // const [open, setOpen] = useState(false);
+    const [dataHome, setDataHome] = useState([]);
 
-    // // // Função para abrir o modal
-    // const handleOpen = () => {
-    //     console.log("aqui aqui")
-    //     setOpen(true);
-    //     console.log(open);
-    // };
-
-    // // Função para fechar o modal
-    // const handleClose = () => {
-    //     console.log("algum problemas")
-    //     setOpen(false);
-    // };
-
-    // Efeito para carregar os dados iniciais quando a página é montada e `query` está vazio
     // useEffect(() => {
-    //     if (!homeLoad) {
-    //         setIsFetching(true);
-    //         // getHome().then(() => {
-    //         //     setIsFetching(false);
-    //         //     setLoadHome(true);
-    //         // });
+    //     if (homeLoad) {
+    //         getHome().then(response => {
+    //             setDataHome(response);
+    //             setLoadHome(false)
+    //         });
     //     }
-    // }, [query, getHome, isFetching, setLoadHome]);
+    // }, [homeLoad, getHome, setLoadHome]);
 
     // Efeito para realizar busca quando `query` muda ou uma nova opção é selecionada
     useEffect(() => {
@@ -59,6 +43,7 @@ function Home() {
                 setQueryTemp(query);
                 setOptionTemp(opSelected);
             });
+           
         }
     }, [query, opSelected, queryTemp, opSelectedTemp, getGeneral, isFetching]);
 
@@ -73,20 +58,14 @@ function Home() {
             <Divider />
             <Typography variant="h5" mt={4}>Categorias pensadas para você!</Typography>
             <Container maxWidth="xl" className="content" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                {homeLoad ?
+                { (!query)?
                     <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant="h6" mt={4}>Achados Mais Vistos</Typography>
-                        <Slides dado={dadoView} isFetching={isFetching} />
-                        <Typography variant="h6" mt={4}>Editoras de Sucesso</Typography>
-                        <Slides dado={dadoSubject} isFetching={isFetching} />
-                        <Typography variant="h6" mt={4}>Achados Mais Avaliados</Typography>
-                        <Slides dado={dadoValiable} isFetching={isFetching} />
+                        <Typography variant="h6" mt={4}>Achados e indicados</Typography>
+                        <Slides dado={dataHome} isFetching={isFetching} />
                     </Container>
                     :
                     <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column' }}>
                         <Typography variant="h6" mt={4}>Os melhores livros de {query}</Typography>
-                        {/* <Button onClick={handleOpen} key={index} item={item.volumeInfo}>Clique aqui</Button>
-                        <PageOver open={open} onClose={handleClose} /> */}
                         <Slides dado={dado} isFetching={isFetching} />
                     </Container>
                 }
@@ -97,6 +76,7 @@ function Home() {
                 {/** Fazer as análises gráficas */}
                 <InterativeTimeRating/>
                 <InterativeTimeRating/>
+                {/* <InterativeSubject/> */}
             </Container>
         </Container>
     );

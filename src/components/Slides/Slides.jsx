@@ -70,7 +70,7 @@ function Slides({ dado, isFetching }) {
                                     >
                                         {"Gênero:" + item.volumeInfo.categories}
                                     </Typography>
-                                    <Typography variant="caption" sx={{display: 'flex', justifyContent: 'center'}}>
+                                    <Typography variant="caption" sx={{display: 'flex', alignItems: 'center'}}>
                                         {item.volumeInfo.averageRating || "Sem avaliações"}
                                         <StarIcon size='small'/>
                                     </Typography>

@@ -24,7 +24,7 @@ function InterativeTimeRating() {
     const [totalVistos, setTotalVistos] = useState([]);
     const [anosLabels, setAnosLabels] = useState([]);
     const [mediaVotos, setMediaVotos] = useState([]);
-    const { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome, getInterativeTime} = Services();
+    const { dado,  getInterativeTime} = Services();
 
     useEffect(() => {
         if (anos !== prevAnos) {
@@ -35,7 +35,6 @@ function InterativeTimeRating() {
     
     useEffect(() => {
         if (dado.length > 0 && anos !== prevAnos) {
-            console.log("DATA HERE:", dado);
             setPrevAnos(anos); 
     
             const anoAtual = new Date().getFullYear();
@@ -50,10 +49,8 @@ function InterativeTimeRating() {
             for (let i = anos; i > 0; i--) {
                 const ano = anoAtual - i - 4;
                 anosParaLabels.push(ano);
-                console.log("RESULTADO DO NAO:", anoAtual);
                 dado.filter((item) => {
                     const itemAno = parseInt(item.volumeInfo.publishedDate.split('-')[0]);
-                    console.log("ITEM A COMPARAR:", itemAno, ano);
 
                     if(itemAno == ano){
                         totalVistoAno += (parseInt(item.volumeInfo.ratingsCount) || 0)
@@ -63,7 +60,6 @@ function InterativeTimeRating() {
                 });
                 const mediaVotoAno = totalVistoAno > 0 ? totalAverageRating / totalVistoAno : 0;
                 
-                console.log("TOTAL VISTOS E MEDIA NO ANO", totalVistoAno, totalAverageRating, mediaVotoAno);
                 totalVistosPorAno.push(totalVistoAno);
                 mediaVotosPorAno.push(mediaVotoAno);
             }
@@ -73,7 +69,7 @@ function InterativeTimeRating() {
             setAnosLabels(anosParaLabels);
             // barChartsParams.xAxis[0].data = anosParaLabels;
     
-            console.log("VALORES GERAIS DOS GRÁFICOS: ", totalVistosPorAno, mediaVotosPorAno, anosParaLabels);
+           
         }
     }, [dado, anos, prevAnos, anosLabels]); 
 
@@ -81,7 +77,7 @@ function InterativeTimeRating() {
         <Stack
             direction={{ xs: 'column', xl: 'row' }}
             spacing={1}
-            sx={{ width: '45%', marginTop: '2%', marginBottom: '2%', border: '#ccc 1px solid', borderRadius:'5px'}}
+            sx={{ width: '47%', height:'50%', marginTop: '2%', marginBottom: '2%', border: '#ccc 1px solid', borderRadius:'5px'}}
         >
             <Box sx={{ flexGrow: 1 }}>
                 <ToggleButtonGroup
