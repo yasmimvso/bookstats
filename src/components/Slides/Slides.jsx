@@ -3,7 +3,7 @@ import styles from '../../styles/Home.module.css';
 import { Typography, Skeleton, Box } from '@mui/material';
 import Slider from "react-slick";
 import PropTypes from 'prop-types';
-
+import StarIcon from '@mui/icons-material/Star';
 function Slides({dado, isFetching}){
     
     const { settings } = Setting();
@@ -16,7 +16,7 @@ function Slides({dado, isFetching}){
                     sx={{
                         width: '19%',
                         minWidth: 210,
-                        height: 340,
+                        height: 350,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -28,7 +28,7 @@ function Slides({dado, isFetching}){
                         <img
                             className={styles.imgBooks}
                             alt={item.volumeInfo.title}
-                            src={item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.smallThumbnail : null}
+                            src={item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : null}
                             onClick={() => { console.log("Adicionar função para mostrar mais informações") }}
                         />
                     )}
@@ -37,16 +37,28 @@ function Slides({dado, isFetching}){
                             <Skeleton width="100%" />
                         ) : (
                             <>
+                                
                                 <Typography gutterBottom variant="body2">
                                     {item.volumeInfo.title}
                                 </Typography>
+                                
                                 <Typography
                                     variant="caption"
-                                    sx={{ display: 'block', color: 'text.secondary' }}
+                                    sx={{ display: 'block', color: 'textPrimary' }}
                                 >
                                     {Array.isArray(item.volumeInfo.authors)
                                         ? item.volumeInfo.authors.join(', ')
                                         : item.volumeInfo.authors || 'Autor desconhecido'}
+                                </Typography>
+                                <Typography
+                                    variant="h1"
+                                    sx={{ display: 'block', color: 'text.secondary' }}
+                                >
+                                    {item.volumeInfo.categories}
+                                </Typography>
+                                <Typography>
+                                    {item.volumeInfo.averageRating}
+                                    <StarIcon />
                                 </Typography>
                             </>
                         )}

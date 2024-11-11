@@ -1,44 +1,107 @@
-// Service.jsx
 import { useState } from 'react';
-import httpClient from './baseAxio'; 
+import httpClient from './baseAxio';
 
-// Service para a consulta de livros
-
-// fazer aquele processo de usar a string, procurar no geral, depois athor, depois editora.
-// se for 
 function Service() {
-    // melhorar de modo que analisamos as regras particulares para cada consulta
     const [dado, setDado] = useState([]);
+    const [dadoView, setDadoView] = useState([]);
+    const [dadoSubject, setDadoSubject] = useState([]);
+    const [dadoValiable, setDadoValiable] = useState([]);
+    const [tipo, setTipo] = useState('');
+
     const key = '&key=' + import.meta.env.VITE_API_KEY;
 
- 
+    const dataMostViewed = (dado) => {
+
+        // "averageRating": 5,
+        // "ratingsCount": 1,
+
+        const result = dado
+            .filter(item => item.volumeInfo && item.volumeInfo.ratingsCount > 50)
+            .sort((a, b) => parseInt(b.volumeInfo.ratingsCount) - parseInt(a.volumeInfo.ratingsCount))
+            .slice(0, 10);
+        
+        console.log("DADOS MOST VIEWD", result);
+        setDadoView(result);
+    };
+
+    const dataMostAvaliable = (dado) => {
+        const result = dado
+            .filter(item => item.volumeInfo && item.volumeInfo.averageRating > 4.3)
+            .sort((a, b) => parseInt(b.volumeInfo.averageRating) - parseInt(a.volumeInfo.averageRating))
+            .slice(0, 10);
+        
+        console.log("DADOS MOST AVALIABLE", result);
+        setDadoValiable(result);
+    };
+
+    const dataSubject = (dado) => {
+        const publishers = new Set();
+        const result = dado
+            .filter(item => item.volumeInfo && item.volumeInfo.publisher)
+            .filter(item => {
+                const isUnique = !publishers.has(item.volumeInfo.publisher);
+                if (isUnique) publishers.add(item.volumeInfo.publisher);
+                return isUnique;
+            })
+            .slice(0, 10);
+        console.log("DADOS DATA SUBJECT", result);
+        setDadoSubject(result);
+    };
+
     const getGeneral = async (string, val) => {
-        console.log("Valor selecionado", val);
-        console.log('?q='+ string + key)
+        console.log("Valor selecionado:", val);
 
-        // mudar consulta conforme val selecionado
-        try {
-            const response = await httpClient.get('?q='+ string + key);
-            setDado(response.data.items); 
-            console.log("RESPONSE STATUS", response.status );
-            console.log("DADO DE RETORNO: ", response.data.items);
-        } catch (error) {
-           alert('Error na consulta' + error);
+        if (val) {
+            if (val === 1) {
+                setTipo('intitle:');
+            } else if (val === 2) {
+                setTipo('inauthor:');
+            } else if (val === 3) {
+                setTipo('inpublisher:');
+            } else if (val === 4) {
+                setTipo('subject:');
+            } else {
+                setTipo('isbn:');
+            }
+
+            const query = `?q=${tipo}${string}${key}`;
+
+            try {
+                const response = await httpClient.get(query);
+                setDado(response.data.items);
+                console.log("RESPONSE STATUS", response.status);
+                console.log("DADO DE RETORNO: ", response.data.items);
+            } catch (error) {
+                console.error('Error na consulta: ', error.response);
+            }
+        } else {
+            const query = `?q=${string}${key}`;
+            console.log("Query gerada (sem filtro): ", query);
+
+            try {
+                const response = await httpClient.get(query);
+                setDado(response.data.items);
+                console.log("RESPONSE STATUS", response.status);
+                console.log("DADO DE RETORNO: ", response.data.items);
+            } catch (error) {
+                console.error('Error na consulta: ', error.response);
+            }
         }
     };
 
-
-    const getSubject = async (val) => {
+    const getHome = async () => {
         try {
-            const response = await httpClient.get('subject:' + val + key);
-            setDado(response.data.items);
-        } catch (error) {
-            alert('Error na consulta' + error);
+            const response = await httpClient.get(`?q=all${key}`);
+            
+            dataMostViewed(response.data.items);
+            dataSubject(response.data.items);
+            dataMostAvaliable(response.data.items);
+        } catch (err) {
+            console.log(err);
         }
     };
 
-    return { dado, getGeneral, getSubject }; 
-    // estou retornando os dados como uma função javascript comum sem estruturação html
+    return { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome };
 }
 
 export default Service;

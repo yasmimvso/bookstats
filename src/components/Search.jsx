@@ -10,7 +10,7 @@ import { ListItemText, ListItemButton, List } from '@mui/material';
 
 function Search(props) {
     const [inputValue, setInputValue] = useState('');
-    const [opSelection, setOpSelection] = useState(1); 
+    const [opSelection, setOpSelection] = useState(0); 
     const [primarySelect, setPrimarySelect] = useState('Filtro');
     const [open, setOpen] = useState(false);
 
@@ -24,7 +24,7 @@ function Search(props) {
     }
 
     function handleClick() {
-        props.onSearch(inputValue, opSelection);
+        {opSelection? props.onSearch(inputValue, opSelection): props.onSearch(inputValue, '')}
     }
 
     function handleOptionClick(optionVal, optionLabel) {
@@ -60,6 +60,9 @@ function Search(props) {
                         </ListItemButton>
                         <ListItemButton sx={{ pl: 4 }} onClick={() => handleOptionClick(4, "Gênero" )}>
                             <ListItemText primary="Gênero" />
+                        </ListItemButton>
+                        <ListItemButton sx={{ pl: 4 }} onClick={() => handleOptionClick(5, "ISBN" )}>
+                            <ListItemText primary="ISBN" />
                         </ListItemButton>
                     </List>
                 )}

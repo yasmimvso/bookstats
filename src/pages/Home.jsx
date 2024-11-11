@@ -2,33 +2,48 @@ import { useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import Search from '../components/Search';
 import Service from '../services/Service';
-import Slides from '../components/Slides/Slides'
+import Slides from '../components/Slides/Slides';
 
-import { Typography, Container} from '@mui/material';
+import { Typography, Container, Button } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-
 function Home() {
 
-    const { dado, getGeneral } = Service();
+    const { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome } = Service();
+
     const [query, setQuery] = useState('');
-    const [opSelected, setOption] = useState(1);
+    const [homeLoad, setLoadHome] = useState(false);
+    const [opSelected, setOption] = useState(0);
+    const [opSelectedTemp, setOptionTemp] = useState(0);
     const [queryTemp, setQueryTemp] = useState('');
     const [isFetching, setIsFetching] = useState(false);
 
+    // Efeito para carregar os dados iniciais quando a página é montada e `query` está vazio
     useEffect(() => {
-        if (query && (query !== queryTemp) && !isFetching) {
+        if (!homeLoad) {
             setIsFetching(true);
-            getGeneral(query, opSelected).then(() => {
-                setIsFetching(false);
-                setQueryTemp(query);
-            });
+            // getHome().then(() => {
+            //     setIsFetching(false);
+            //     setLoadHome(true);
+            // });
         }
-    }, [query, isFetching, queryTemp, getGeneral, opSelected]);
+    }, [query, getHome, isFetching, setLoadHome]);
+
+    // Efeito para realizar busca quando `query` muda ou uma nova opção é selecionada
+    useEffect(() => {
+        if (query && (query !== queryTemp || opSelected !== opSelectedTemp) && !isFetching) {
+            setIsFetching(true);
+            // getGeneral(query, opSelected).then(() => {
+            //     setIsFetching(false);
+            //     setQueryTemp(query);
+            //     setOptionTemp(opSelected);
+            // });
+        }
+    }, [query, opSelected, queryTemp, opSelectedTemp, getGeneral, isFetching]);
 
     function handleSearch(string, val) {
         setQuery(string);
@@ -36,20 +51,32 @@ function Home() {
     }
 
     return (
-        <Container maxWidth="false">
-            <Search onSearch={handleSearch} />
+        <Container maxWidth="false" sx={{ display: 'flex', flexDirection: 'column'}}>
+            <Search onSearch={handleSearch} sx={{ alignItems: 'center', justifyContent: 'center'}}/>
             <Divider />
-            <Typography variant="h5" mt={4} >Categorias pensadas para você!</Typography>
-            <Container maxWidth="xl" className="content">
-                <Container maxWidth="lg" sx={{ wrap: 'nowrap' }}>
-                     {/** Colocar uma condição, se não foi pesquiaado nada temos um tipo de consulta, se foi pesquisado ai temos outro tipo*/}
-                    <Typography variant="h6" mt={4}>Achados Mais Vendidos</Typography>
-                    <Slides dado={dado} isFetching={isFetching}/>
-                    {/* <Typography variant="h6" mt={4}>Editoras de Sucesso</Typography>
-                    <Slides dado={dado} isFetching={isFetching}/> */}
-                    <Typography variant="h6" mt={4}>Achados Mais Avaliados</Typography>
-                    <Slides dado={dado} isFetching={isFetching} />
-                </Container>
+            <Typography variant="h5" mt={4}>Categorias pensadas para você!</Typography>
+            <Container maxWidth="xl" className="content" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {homeLoad ?
+                    <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column'}}>
+                        <Typography variant="h6" mt={4}>Achados Mais Vistos</Typography>
+                        <Slides dado={dadoView} isFetching={isFetching} />
+                        <Typography variant="h6" mt={4}>Editoras de Sucesso</Typography>
+                        <Slides dado={dadoSubject} isFetching={isFetching} />
+                        <Typography variant="h6" mt={4}>Achados Mais Avaliados</Typography>
+                        <Slides dado={dadoValiable} isFetching={isFetching} />
+                    </Container>
+                    :
+                    <Container maxWidth="lg" sx={{ display: 'flex', flexDirection: 'column'}}>
+                        <Typography variant="h6" mt={4}>Os melhores livros de {query}</Typography>
+                        <Button onClick={()=>console.log("ola")}> Click aqui</Button>
+                        <Slides dado={dado} isFetching={isFetching} />
+                    </Container>
+                }
+            </Container>
+            <Divider sx={{ mt: 4 }} />
+            <Typography variant="h5" mt={4}>Visualização Interativa de dados</Typography>
+            <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                {/** Fazer as análises gráficas */}
             </Container>
         </Container>
     );
