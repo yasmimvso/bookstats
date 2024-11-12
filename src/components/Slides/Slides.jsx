@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 function Slides({ dado, isFetching }) {
     const [open, setOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null); // Armazena o item selecionado
+    const [selectedItem, setSelectedItem] = useState(null); 
     const { settings } = Setting();
 
     const handleOpen = (item) => {
@@ -45,7 +45,7 @@ function Slides({ dado, isFetching }) {
                                 className={styles.imgBooks}
                                 alt={item.volumeInfo.title}
                                 src={item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : LogoBook}
-                                onClick={() => handleOpen(item.volumeInfo)} // Passa o item para o modal
+                                onClick={() => handleOpen(item)} 
                             />
                         )}
                         <Box sx={{ pr: 2, mt: 1 }}>
@@ -70,7 +70,7 @@ function Slides({ dado, isFetching }) {
                                     >
                                         {"Gênero:" + item.volumeInfo.categories}
                                     </Typography>
-                                    <Typography variant="caption" sx={{display: 'flex', justifyContent: 'center'}}>
+                                    <Typography variant="caption" sx={{display: 'flex', alignItems: 'center'}}>
                                         {item.volumeInfo.averageRating || "Sem avaliações"}
                                         <StarIcon size='small'/>
                                     </Typography>
@@ -88,6 +88,7 @@ function Slides({ dado, isFetching }) {
     );
 }
 
+// uso para ressaltar a importancia dos dados e qual o tipo. Se não cumprir tais recomendações dá erro
 Slides.propTypes = {
     dado: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,

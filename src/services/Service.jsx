@@ -3,50 +3,49 @@ import httpClient from './baseAxio';
 
 function Service() {
     const [dado, setDado] = useState([]);
-    const [dadoView, setDadoView] = useState([]);
-    const [dadoSubject, setDadoSubject] = useState([]);
-    const [dadoValiable, setDadoValiable] = useState([]);
-    const [tipo, setTipo] = useState('');
+    const [dadoView,  setDadoView] = useState([]);
+    const [tipo, setTipo] = useState("");
 
     const key = '&key=' + import.meta.env.VITE_API_KEY;
 
-    const dataMostViewed = (dado) => {
+    // Tive alguns problemas no processo de dedsenvolvimento dessas lógicas
+    // Apenas irei deixar aqui para poder continuar trabalhando nelas depois 
+    
 
-        // "averageRating": 5,
-        // "ratingsCount": 1,
+    // const dataMostViewed = (dado) => {
 
-        const result = dado
-            .filter(item => item.volumeInfo && item.volumeInfo.ratingsCount > 50)
-            .sort((a, b) => parseInt(b.volumeInfo.ratingsCount) - parseInt(a.volumeInfo.ratingsCount))
-            .slice(0, 10);
-        
-        console.log("DADOS MOST VIEWD", result);
-        setDadoView(result);
-    };
+    //     const result = dado
+    //         .filter(item => item.volumeInfo && item.volumeInfo.ratingsCount > 50)
+    //         .sort((a, b) => parseInt(b.volumeInfo.ratingsCount) - parseInt(a.volumeInfo.ratingsCount))
+    //         .slice(0, 10);
 
-    const dataMostAvaliable = (dado) => {
-        const result = dado
-            .filter(item => item.volumeInfo && item.volumeInfo.averageRating > 4.3)
-            .sort((a, b) => parseInt(b.volumeInfo.averageRating) - parseInt(a.volumeInfo.averageRating))
-            .slice(0, 10);
-        
-        console.log("DADOS MOST AVALIABLE", result);
-        setDadoValiable(result);
-    };
+    //     console.log("DADOS MOST VIEWD", result);
+    //     setDadoView(result);
+    // };
 
-    const dataSubject = (dado) => {
-        const publishers = new Set();
-        const result = dado
-            .filter(item => item.volumeInfo && item.volumeInfo.publisher)
-            .filter(item => {
-                const isUnique = !publishers.has(item.volumeInfo.publisher);
-                if (isUnique) publishers.add(item.volumeInfo.publisher);
-                return isUnique;
-            })
-            .slice(0, 10);
-        console.log("DADOS DATA SUBJECT", result);
-        setDadoSubject(result);
-    };
+    // const dataMostAvaliable = (dado) => {
+    //     const result = dado
+    //         .filter(item => item.volumeInfo && item.volumeInfo.averageRating > 4.3)
+    //         .sort((a, b) => parseInt(b.volumeInfo.averageRating) - parseInt(a.volumeInfo.averageRating))
+    //         .slice(0, 10);
+
+    //     console.log("DADOS MOST AVALIABLE", result);
+    //     setDadoValiable(result);
+    // };
+
+    // const dataSubject = (dado) => {
+    //     const publishers = new Set();
+    //     const result = dado
+    //         .filter(item => item.volumeInfo && item.volumeInfo.publisher)
+    //         .filter(item => {
+    //             const isUnique = !publishers.has(item.volumeInfo.publisher);
+    //             if (isUnique) publishers.add(item.volumeInfo.publisher);
+    //             return isUnique;
+    //         })
+    //         .slice(0, 10);
+    //     console.log("DADOS DATA SUBJECT", result);
+    //     setDadoSubject(result);
+    // };
 
     const getGeneral = async (string, val) => {
         console.log("Valor selecionado:", val);
@@ -92,16 +91,40 @@ function Service() {
     const getHome = async () => {
         try {
             const response = await httpClient.get(`?q=all${key}`);
-            
-            dataMostViewed(response.data.items);
-            dataSubject(response.data.items);
-            dataMostAvaliable(response.data.items);
+            setDadoView(response.data.items);
+
+            console.log("DADOS DE SETDATA VIEW",dadoView)
         } catch (err) {
             console.log(err);
         }
     };
 
-    return { dado, dadoSubject, dadoView, dadoValiable, getGeneral, getHome };
+    const getInterativeTime = async () => {
+        try {
+            const response = await httpClient.get(`?q=romance${key}`);
+
+            setDado(response.data.items)
+
+            console.log("DATA", response.data.items);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const getInterativesSubject = async () => {
+        try {
+            const response = await httpClient.get(`?q=all${key}`);
+
+            setDado(response.data.items)
+
+            console.log("DATA", response.data.items);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+    return { dado, dadoView, getGeneral, getInterativeTime, getInterativesSubject, getHome};
 }
 
 export default Service;

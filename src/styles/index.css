@@ -1,0 +1,27 @@
+/* index.css */
+:root {
+    --body_color: black;
+    --link_color: black;
+}
+
+[data-theme="dark"] {
+    --body_background: #282c34;
+    --body_color: white;
+    --link_color: white;
+}
+
+[data-theme="light"] {
+    --body_background: white;
+    --body_color: black;
+    --link_color: black;
+}
+
+body {
+    background-color: var(--body_background);
+    color: var(--body_color);
+}
+
+.header {
+    background-color: var(--body_background);
+    color: var(--body_color);
+}

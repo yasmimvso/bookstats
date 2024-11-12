@@ -1,4 +1,5 @@
 
+// são configurações padrões do Slick, estou usando para o Slider
 function Slide(){
     var settings = {
         dots: true,

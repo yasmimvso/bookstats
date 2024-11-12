@@ -1,5 +1,6 @@
 .header {
-    background-color: rgb(210, 227, 252);
+    background-color: black;
+    /* background-color: rgb(210, 227, 252); */
     color: #333; 
 }
 
@@ -7,13 +8,4 @@
     width: 40px;
     height: auto;
     margin-right: 10px;
-}
-
-.header{
-    color: #333; 
-}
-
-.header a {
-    text-decoration: none;
-    color: inherit;
 }
