@@ -88,6 +88,7 @@ function Slides({ dado, isFetching }) {
     );
 }
 
+// uso para ressaltar a importancia dos dados e qual o tipo. Se não cumprir tais recomendações dá erro
 Slides.propTypes = {
     dado: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,

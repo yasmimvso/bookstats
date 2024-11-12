@@ -1,4 +1,5 @@
 import '../styles/Header.css';
+import '../styles/index.css'
 import logoIcon from "../assets/logo.png";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
@@ -10,10 +11,24 @@ import ModeNightIcon from '@mui/icons-material/ModeNight';
 
 function Header() {
     const [theme, setTheme] = useState(false);
-
+    
+    // funcionalidades para mudança de modo de visualização escuro
+    // ainda estou trabalhando nele
+    
+    const setDarkMode = () => {
+        document.body.setAttribute("data-theme", "dark");
+    };
+    
+    const setLightMode = () => {
+        document.body.setAttribute("data-theme", "light");
+    };
+    
     const toggleTheme = () => {
         setTheme(!theme);
+        if (theme) setLightMode();
+        else setDarkMode();
     };
+    
 
     return (
         <AppBar position="fixed" color="inherit" className="header">
@@ -34,9 +49,11 @@ function Header() {
                             </IconButton>
                         </Link>
                     </Tooltip>
-                    <IconButton aria-label="Modo de visualização" color="inherit" onClick={toggleTheme}>
-                        {theme ? <LightModeIcon /> : <ModeNightIcon />}
-                    </IconButton>
+                    <Tooltip title="Modo Noturno">
+                        <IconButton aria-label="Modo Noturno" color="inherit" onClick={toggleTheme}>
+                            {theme ? <LightModeIcon /> : <ModeNightIcon />}
+                        </IconButton>
+                    </Tooltip>
                 </Box>
             </Toolbar>
         </AppBar>

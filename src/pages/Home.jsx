@@ -25,6 +25,8 @@ function Home() {
     const [isFetching, setIsFetching] = useState(false);
     const [dataHome, setDataHome] = useState([]);
 
+    
+
     // useEffect(() => {
     //     if (homeLoad) {
     //         getHome().then(response => {
@@ -34,19 +36,22 @@ function Home() {
     //     }
     // }, [homeLoad, getHome, setLoadHome]);
 
-    // Efeito para realizar busca quando `query` muda ou uma nova opção é selecionada
+    //  realizar busca quando `query` muda ou uma nova opção é selecionada. 
+    // as condições são para evitar consultas demasiadas ao renderizar a página
+
     useEffect(() => {
         if (query && (query !== queryTemp || opSelected !== opSelectedTemp) && !isFetching) {
             setIsFetching(true);
             getGeneral(query, opSelected).then(() => {
-                setIsFetching(false);
-                setQueryTemp(query);
-                setOptionTemp(opSelected);
+                setIsFetching(false); // uso essa condição para identificar quando estpu consultando nova página. Uso esse dado no meu compinente Slider
+                setQueryTemp(query); // uso de hook para identificar quando o usuário digita algo
+                setOptionTemp(opSelected); // utilizo de condição temporária para identificar alterações de input
             });
            
         }
     }, [query, opSelected, queryTemp, opSelectedTemp, getGeneral, isFetching]);
 
+    // função para alterar a opção do input
     function handleSearch(string, val) {
         setQuery(string);
         setOption(val);
@@ -54,6 +59,7 @@ function Home() {
 
     return (
         <Container maxWidth="false" sx={{ display: 'flex', flexDirection: 'column' }}>
+            {/**consigo acessar os dados do usuario pelo props onSearch, os dados são passados para HandleSearch */}
             <Search onSearch={handleSearch} sx={{ alignItems: 'center', justifyContent: 'center' }} />
             <Divider />
             <Typography variant="h5" mt={4}>Categorias pensadas para você!</Typography>
@@ -73,10 +79,8 @@ function Home() {
             <Divider sx={{ mt: 4 }} />
             <Typography variant="h5" mt={4}>Visualização Interativa de dados</Typography>
             <Container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                {/** Fazer as análises gráficas */}
                 <InterativeTimeRating/>
                 <InterativeTimeRating/>
-                {/* <InterativeSubject/> */}
             </Container>
         </Container>
     );

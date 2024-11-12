@@ -8,6 +8,10 @@ function Service() {
 
     const key = '&key=' + import.meta.env.VITE_API_KEY;
 
+    // Tive alguns problemas no processo de dedsenvolvimento dessas lógicas
+    // Apenas irei deixar aqui para poder continuar trabalhando nelas depois 
+    
+
     // const dataMostViewed = (dado) => {
 
     //     const result = dado

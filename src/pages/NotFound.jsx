@@ -44,7 +44,6 @@ function NotFound() {
                     Volte para a tela inicial
                 </Typography>
 
-                {/* Botão de retorno */}
                 <Button
                     component={Link}
                     to="/"

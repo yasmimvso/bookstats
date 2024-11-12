@@ -33,6 +33,13 @@ function Search(props) {
         setPrimarySelect(optionLabel)
     }
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault(); 
+          handleClick();
+        }
+      };
+
     return (
         <Container className="content-stack" sx={{ position: 'relative' }}>
             <List sx={{ width: '20%', maxWidth: 360}} size='small'>
@@ -49,6 +56,7 @@ function Search(props) {
                         bgcolor: 'background.paper',
                         width: '100%', 
                     }}>
+                       {/**Utilizei para fazer uma consulta mais epecificada. Ai filtro pelas condições que o API book permite */}
                         <ListItemButton sx={{ pl: 4 }} onClick={() => handleOptionClick(1, "Título")}>
                             <ListItemText primary="Título" />
                         </ListItemButton>
@@ -77,11 +85,13 @@ function Search(props) {
                     className="search"
                     value={inputValue}
                     onChange={handleInput}
+                    onKeyDown={handleKeyDown}
+                    tabIndex="0"
                 />
             </Container>
             <Container className="busca">
                 <Tooltip title="Pesquisar">
-                    <IconButton onClick={handleClick} aria-label='send' size='small' color='secondary'>
+                    <IconButton onClick={handleClick} aria-label='send' size='small'>
                         <SearchIcon />
                     </IconButton>
                 </Tooltip>
